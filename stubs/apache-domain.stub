@@ -1,0 +1,22 @@
+<VirtualHost *:80>
+     ServerAdmin admin@{DOMAIN}
+     ServerName {DOMAIN}
+     DocumentRoot {DOMAIN_PATH}
+     DirectoryIndex index.php  
+
+     <Directory {DOMAIN_PATH}>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+        Require all granted
+     </Directory>
+
+    <FilesMatch \.php$>
+      # For Apache version 2.4.10 and above, use SetHandler to run PHP as a fastCGI process server
+      SetHandler "proxy:unix:/run/php/php{PHP_VERSION}-fpm.sock|fcgi://localhost"
+    </FilesMatch>
+
+     ErrorLog ${APACHE_LOG_DIR}/{DOMAIN}_error.log
+     CustomLog ${APACHE_LOG_DIR}/{DOMAIN}_access.log combined
+</VirtualHost>
