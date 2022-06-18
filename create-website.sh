@@ -28,17 +28,22 @@ sed -i "s|{DOMAIN_PATH}|$DOMAIN_PATH|g" "$DOMAIN_CONF_PATH"
 
 # Enable site
 TEST_OUTPUT=$(apachectl -t 2>&1)
-
-
 if [[ "$TEST_OUTPUT" =~ .*"Syntax OK".* ]]; then
+
+    # First disable, if nebaled
     if [ -f "/etc/apache2/sites-enabled/$DOMAIN_CONF" ]; then
 	a2dissite "$DOMAIN_CONF"
     fi
+
+    # Enable site now
     a2ensite "$DOMAIN_CONF"
+
+    # Add entry to the /etc/hosts file
     if ! grep -q "$DOMAIN" /etc/hosts; then
         echo "127.0.0.1  $DOMAIN" >> /etc/hosts
     fi
 
+    # Restart Apache
     systemctl restart apache2
     echo "Site $DOMAIN created!"
 else
