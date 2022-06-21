@@ -4,13 +4,14 @@
 USERNAME=$(logname)
 DOMAIN=$1
 PHP_VERSION=$2
+SCRIPT_PATH="$(dirname "$(readlink -f "$0")")";
 ROOT_PATH="/home/$USERNAME/Sites"
 DOMAIN_PATH="$ROOT_PATH/$DOMAIN"
 DOMAIN_CONF="$DOMAIN.conf"
 DOMAIN_CONF_PATH="/etc/apache2/sites-available/$DOMAIN_CONF"
 
 # Attempt to install PHP version
-bash "$PWD/install-php.sh" "$PHP_VERSION" 2>&1
+bash "$SCRIPT_PATH/install-php.sh" "$PHP_VERSION" 2>&1
 
 # Create domain path
 mkdir -p "$DOMAIN_PATH"
@@ -19,7 +20,7 @@ echo "It Works" > "$DOMAIN_PATH/index.php"
 chown -R "$USERNAME":"$USERNAME" "$DOMAIN_PATH"
 
 # Create config file
-cp stubs/apache-domain.stub "$DOMAIN_CONF_PATH"
+cp "$SCRIPT_PATH/stubs/apache-domain.stub" "$DOMAIN_CONF_PATH"
 
 # Replace variables
 sed -i "s|{PHP_VERSION}|$PHP_VERSION|g" "$DOMAIN_CONF_PATH"
