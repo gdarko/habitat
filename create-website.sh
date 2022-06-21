@@ -16,7 +16,11 @@ bash "$SCRIPT_PATH/install-php.sh" "$PHP_VERSION" 2>&1
 # Create domain path
 mkdir -p "$DOMAIN_PATH"
 chmod -R 755 "$DOMAIN_PATH"
-echo "It Works" > "$DOMAIN_PATH/index.php"
+
+if [[ ! -f "$DOMAIN_PATH/index.php" ]]; then
+    echo "It Works" > "$DOMAIN_PATH/index.php"
+fi
+
 chown -R "$USERNAME":"$USERNAME" "$DOMAIN_PATH"
 
 # Create config file
