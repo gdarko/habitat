@@ -34,6 +34,13 @@ Signature: `install-php.sh PHP_VERSION`
 sudo ./install-php.sh 7.4
 ```
 
+#### 4. Switch to specific command line PHP version
+
+Signature: `switch-cmd-php PHP_VERSION`
+
+```
+sudo ./switch-cmd-php 7.4
+```
 
 ### Roadmap
 - Add proper output to the scripts and surpress their outputs
