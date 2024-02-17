@@ -41,6 +41,15 @@ if [ -f "/etc/php/$VERSION/fpm/php.ini" ]; then
 fi
 
 
+# Install composer
+if [ ! -f "/usr/bin/composer" ]; then
+   cd tmp
+   wget https://getcomposer.org/download/latest-stable/composer.phar
+   mv composer.phar /usr/bin/composer
+   chmod +x /usr/bin/composer
+fi
+
+
 # Enable apache extensions
 a2enmod actions fcgid alias proxy_fcgi rewrite
 systemctl restart apache2
